@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <!--    create a guideline with 0.25 and set a image view above it-->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.30" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_enter_otp"
+        android:layout_width="156dp"
+        android:layout_height="156dp"
+        app:layout_constraintHorizontal_bias=".45"
+        android:src="@drawable/phonewithnumber"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guideline" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_enter_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/poppins_semibold"
+        android:gravity="center"
+        android:text="@string/enter_phone"
+        android:textColor="@color/primary_text_color"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias=".5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline" />
+
+    <!--    create  a text input layout and add a edit text inside it -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        style="@style/TextInputTheme"
+        app:layout_constraintTop_toBottomOf="@id/tv_enter_number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:hint="@string/phone_number"
+        app:counterEnabled="true"
+        app:startIconDrawable="@drawable/baseline_local_phone_24"
+        app:prefixText="+91 "
+        app:prefixTextColor="@color/primary_text_color"
+        app:counterMaxLength="10"
+        app:helperText="*Required"
+        app:helperTextEnabled="true"
+        app:helperTextTextColor="@color/ErrorColor"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_enter_phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!--    lottie animation put it over btn_verify -->
+
+    <RelativeLayout
+        android:id="@+id/rl_verify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textInputLayout"
+        >
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_verify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/langbuttondesign"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="@string/verify"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias=".2" />
+        <ProgressBar
+            android:id="@+id/lottie_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:elevation="8dp"
+            android:indeterminateTint="@color/primary_text_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_alignStart="@id/btn_verify"
+            android:layout_alignEnd="@id/btn_verify"
+            android:layout_alignTop="@id/btn_verify"
+            android:layout_alignBottom="@id/btn_verify"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias=".2"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            />
+
+    </RelativeLayout>
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_error"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rl_verify"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias=".4"
+        android:textColor="@color/ErrorColor"
+        android:gravity="center"
+        android:layout_margin="15dp"
+        android:text="* Something Went Wrong! Please Try After Some Time"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

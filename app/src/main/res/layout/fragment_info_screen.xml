@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.registrationui.InfoScreen"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rlpic"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="42dp"
+        >
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvinfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="@string/namaste"
+            android:fontFamily="@font/poppins_medium"
+            />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="@string/start"
+            android:fontFamily="@font/poppins_medium"
+            android:layout_below="@id/tvinfo"
+            />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="66dp"
+            android:layout_height="66dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/infop1"
+            />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivpic2"
+            android:layout_width="133dp"
+            android:layout_height="133dp"
+            android:layout_marginTop="96dp"
+            android:layout_marginStart="40dp"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/infop2"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivpic3"
+            android:layout_width="93dp"
+            android:layout_height="93dp"
+            android:layout_below="@id/ivpic2"
+            android:layout_marginEnd="4dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/infop3" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivpic4"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_below="@id/ivpic3"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/infop4"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivpic5"
+            android:layout_width="93dp"
+            android:layout_height="93dp"
+            android:layout_below="@id/ivpic4"
+            android:layout_marginEnd="4dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/infop5" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivpic6"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_below="@id/ivpic5"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/infop6"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnlogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ivpic6"
+            android:layout_marginTop="24dp"
+            app:cornerRadius="4dp"
+            android:text="@string/login"
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="20sp"
+            android:backgroundTint="@color/buttonColor"
+            />
+
+
+    </RelativeLayout>
+
+
+
+</androidx.core.widget.NestedScrollView>

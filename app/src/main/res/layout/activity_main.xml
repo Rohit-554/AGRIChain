@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:elevation="4dp"
+            >
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/custom_app_toolbar"
+                android:background="@color/surface"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:navigationIcon="@drawable/backnav"
+                android:theme="@style/toolbarTheme"
+                />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/nav_graph"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="1dp"
+            tools:layout="@layout/fragment_select_language" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:id="@+id/bottomAppBar"
+        app:fabAlignmentMode="center"
+        app:fabAnimationMode="slide"
+        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
+        style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
+        android:backgroundTint="@color/white"
+        app:fabCradleMargin="10dp"
+        android:visibility="gone"
+        android:theme="@style/Theme.MaterialComponents"
+        app:fabCradleRoundedCornerRadius="10dp"
+        app:fabCradleVerticalOffset="10dp"
+        >
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:itemIconTint="@color/bnv_tab_item_foreground"
+            app:itemTextColor="@color/bnv_tab_item_foreground"
+            android:id="@+id/bottomNavigationView"
+            android:layout_marginEnd="16dp"
+            app:itemTextAppearanceActive="@style/Style_TextView"
+            app:menu="@menu/home_menu"
+
+            android:background="@drawable/transparent_background"
+            />
+    </com.google.android.material.bottomappbar.BottomAppBar>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addProductButton"
+        android:src="@drawable/baseline_add_24"
+        android:tint="@color/white"
+        android:visibility="gone"
+        app:elevation="2dp"
+        android:layout_gravity="bottom|center"
+        android:backgroundTint="@color/iconColor"
+        android:theme="@style/Theme.AppCompat"
+        app:layout_anchor="@id/bottomAppBar"
+        app:layout_anchorGravity="center"
+        />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

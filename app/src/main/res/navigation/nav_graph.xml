@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/selectLanguageFragment">
+
+    <fragment
+        android:id="@+id/selectLanguageFragment"
+        android:name="io.jadu.agrichain.presentation.registrationui.SelectLanguageFragment"
+        android:label="@string/select_language"
+        tools:layout="@layout/fragment_select_language">
+        <action
+            android:id="@+id/action_selectLanguageFragment_to_infoScreen"
+            app:destination="@id/infoScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/infoScreen"
+        android:name="io.jadu.agrichain.presentation.registrationui.InfoScreen"
+        android:label="fragment_info_screen"
+        tools:layout="@layout/fragment_info_screen" >
+        <action
+            android:id="@+id/action_infoScreen_to_phoneVerificationFragment"
+            app:destination="@id/phoneVerificationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/phoneVerificationFragment"
+        android:name="io.jadu.agrichain.registrationui.phoneverfication.PhoneVerificationFragment"
+        android:label="PhoneVerificationFragment" >
+        <action
+            android:id="@+id/action_phoneVerificationFragment_to_confirmOtpFragment"
+            app:destination="@id/confirmOtpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/confirmOtpFragment"
+        android:name="io.jadu.agrichain.presentation.registrationui.phoneverfication.ConfirmOtpFragment"
+        android:label="ConfirmOtpFragment" >
+        <action
+            android:id="@+id/action_confirmOtpFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="io.jadu.agrichain.presentation.appuis.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_productListItemFragment"
+            app:destination="@id/productListItemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/productListItemFragment"
+        android:name="io.jadu.agrichain.presentation.appuis.ProductListItemFragment"
+        android:label="Add Product"
+        tools:layout="@layout/fragment_product_list_item" >
+        <action
+            android:id="@+id/action_productListItemFragment_to_productPreviewFragment"
+            app:destination="@id/productPreviewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/productPreviewFragment"
+        android:name="io.jadu.agrichain.presentation.appuis.ProductPreviewFragment"
+        android:label="fragment_product_preview"
+        tools:layout="@layout/fragment_product_preview" />
+    <fragment
+        android:id="@+id/walletConnectFragment"
+        android:name="io.jadu.agrichain.presentation.wallet.WalletConnectFragment"
+        android:label="Create Wallet"
+        tools:layout="@layout/fragment_wallet_connect">
+        <action
+            android:id="@+id/action_walletConnectFragment_to_walletFragment3"
+            app:destination="@id/walletFragment3" />
+    </fragment>
+    <fragment
+        android:id="@+id/walletFragment3"
+        android:name="io.jadu.agrichain.farmer.presentation.wallet.WalletFragment"
+        android:label="Wallet"
+        tools:layout="@layout/fragment_wallet" />
+</navigation>

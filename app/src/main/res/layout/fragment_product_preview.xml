@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.appuis.ProductPreviewFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/loadingTransactionLottie"
+            app:layout_constraintTop_toBottomOf="@id/guideline"
+            app:lottie_autoPlay="true"
+            android:visibility="gone"
+            app:lottie_loop="true"
+            android:elevation="6dp"
+            app:lottie_rawRes="@raw/loadinganimation"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+        <androidx.constraintlayout.widget.Guideline
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/guideline"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5"
+            />
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/farmer_preview_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/product_type"
+                android:textColor="@color/primary_text_color"
+                android:textSize="16sp" />
+            <androidx.cardview.widget.CardView
+                android:layout_width="128dp"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="16dp"
+                >
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:padding="5dp"
+                    android:layout_height="wrap_content"
+                    >
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_vegetables"
+                        android:layout_width="128dp"
+                        android:layout_height="84dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/carrot__1_"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_productType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/vegetables"
+                        android:textColor="@color/primary_text_color"
+                        android:layout_below="@id/iv_vegetables"
+                        android:layout_centerHorizontal="true"
+                        />
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/product_name"
+                android:textColor="@color/primary_text_color"
+                android:textSize="16sp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tv_product_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="This is product name"
+                    android:fontFamily="@font/poppins_medium"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/primary_text_color"
+                    android:layout_gravity="center_vertical"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/_3_product_image"
+                android:textColor="@color/primary_text_color"
+                android:textSize="16sp" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/cv_customimage"
+                app:cardCornerRadius="10dp"
+                android:gravity="start"
+                android:layout_width="match_parent"
+                android:layout_height="128dp"
+                android:layout_margin="16dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="5dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_customimageselect"
+                        android:layout_width="128dp"
+                        android:layout_height="84dp"
+                        android:scaleType="centerCrop"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:padding="16dp"
+                        android:src="@drawable/add_image" />
+                </RelativeLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/product_description"
+                android:textColor="@color/primary_text_color"
+                android:textSize="16sp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tv_productDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="this is product description"
+                    android:fontFamily="@font/poppins_medium"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/primary_text_color"
+                    android:layout_gravity="center_vertical"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/_5_seeding_date"
+                android:textColor="@color/primary_text_color"
+                android:textSize="16sp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tv_harvestedDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="this is product name"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textColor="@color/primary_text_color"
+                    android:layout_gravity="center_vertical"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/_expiry_date"
+                android:textColor="@color/primary_text_color"
+                android:textSize="16sp" />
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tv_expiryDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="this is product expiry date"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textColor="@color/primary_text_color"
+                    android:layout_gravity="center_vertical"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/_7_farm_location"
+                android:textColor="@color/primary_text_color"
+                android:textSize="16sp" />
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tv_farmLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="this is farmLocation"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textColor="@color/primary_text_color"
+                    android:layout_gravity="center_vertical"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/_price"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@color/primary_text_color"
+                android:textSize="16sp" />
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tv_product_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="this is product price"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textColor="@color/primary_text_color"
+                    android:layout_gravity="center_vertical"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ProgressBar
+                    android:id="@+id/lottie_progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:visibility="gone"
+                    app:lottie_autoPlay="true"
+                    android:indeterminateTint="@color/white"
+                    android:elevation="10dp"
+                    android:layout_alignStart="@id/btn_preview_btn"
+                    android:layout_alignEnd="@id/btn_preview_btn"
+                    android:layout_alignTop="@id/btn_preview_btn"
+                    android:layout_alignBottom="@id/btn_preview_btn"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/progress"
+                    />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_preview_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="4dp"
+                    android:background="@drawable/langbuttondesign"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="@string/confirm_and_add_product"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/btn_edit_fields"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/btn_preview_btn"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="@string/edit_details"
+                    android:textColor="@color/link_color"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</androidx.core.widget.NestedScrollView>

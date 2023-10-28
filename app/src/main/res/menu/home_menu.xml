@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@drawable/added_item_selector"
+        android:title="@string/all_added_products"
+        />
+
+    <item
+        android:id="@+id/newOrderReceiveFragment"
+        android:icon="@drawable/notification_selector"
+        android:title="@string/new_orders" />
+
+    <item
+        android:id="@+id/productListItemFragment"
+        android:title="" />
+
+    <item
+        android:id="@+id/walletConnectFragment"
+        android:icon="@drawable/wallet_selector"
+        android:title="@string/wallet" />
+
+
+    <item
+        android:id="@+id/farmerProfileFragment"
+        android:icon="@drawable/profile_selector"
+        android:title="@string/profile" />
+
+
+</menu>
