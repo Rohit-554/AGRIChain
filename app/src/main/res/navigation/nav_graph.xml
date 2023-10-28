@@ -61,7 +61,11 @@
         android:id="@+id/productPreviewFragment"
         android:name="io.jadu.agrichain.presentation.appuis.ProductPreviewFragment"
         android:label="fragment_product_preview"
-        tools:layout="@layout/fragment_product_preview" />
+        tools:layout="@layout/fragment_product_preview" >
+        <action
+            android:id="@+id/action_productPreviewFragment_to_productListItemFragment"
+            app:destination="@id/productListItemFragment" />
+    </fragment>
     <fragment
         android:id="@+id/walletConnectFragment"
         android:name="io.jadu.agrichain.presentation.wallet.WalletConnectFragment"

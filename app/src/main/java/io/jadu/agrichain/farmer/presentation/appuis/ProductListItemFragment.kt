@@ -1,12 +1,18 @@
 package io.jadu.agrichain.presentation.appuis
 
+import android.Manifest
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -20,13 +26,16 @@ import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 import io.jadu.agrichain.R
 import io.jadu.agrichain.databinding.FragmentProductListItemBinding
+import io.jadu.agrichain.farmer.models.dtos.addProduct
+import io.jadu.agrichain.farmer.viewmodel.FarmerAuthViewModel
 import io.jadu.agrichain.farmer.viewmodel.ProductListItemViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class ProductListItemFragment : Fragment() {
     private lateinit var binding: FragmentProductListItemBinding
     private lateinit var itemList: List<CardView>
@@ -35,6 +44,7 @@ class ProductListItemFragment : Fragment() {
     private var bundle = Bundle()
     private var _isImageImported = false
     private val productListViewModel: ProductListItemViewModel by viewModels()
+    private val farmerAuthViewModel:FarmerAuthViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,6 +58,41 @@ class ProductListItemFragment : Fragment() {
         binding.expiryDate.setOnClickListener {
             getExpiryDate(binding.expiryDate)
         }
+
+
+
+        val pickMedia = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            if (uri != null) {
+                Log.d("PhotoPicker", "Selected URI: $uri")
+                farmerAuthViewModel.setUri(uri)
+                binding.ivCustomimageselect.setImageURI(uri)
+                binding.tvClicktoupload.text = getString(R.string.image_uploaded)
+            } else {
+                Log.d("PhotoPicker", "No media selected")
+            }
+        }
+
+        binding.cvCustomimage.setOnClickListener {
+            if(!farmerAuthViewModel.isManageStoragePermissionGranted(requireContext())){
+                requestPermission()
+            }else{
+                _isImageImported = true
+                pickMedia.launch("image/*")
+            }
+        }
+
+        binding.detectLocation.setOnClickListener {
+            if(!farmerAuthViewModel.checkLocationPermission()){
+                requestPermissionLauncherForLocation.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+            }else{
+                farmerAuthViewModel.getLastLocation()
+                binding.farmLocation.setText(farmerAuthViewModel.locality)
+            }
+        }
+
+
+
+
 
         binding.PreviewAddedProduct.setOnClickListener {
             if (isFieldsEmpty()) {
@@ -75,6 +120,8 @@ class ProductListItemFragment : Fragment() {
                 )
             }
         }
+
+
         return binding.root
     }
 
@@ -116,6 +163,50 @@ class ProductListItemFragment : Fragment() {
             }
         }
     }
+
+    private val requestPermissionLauncherForLocation = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            farmerAuthViewModel.getLastLocation()
+            binding.farmLocation.setText(farmerAuthViewModel.locality)
+            Toast.makeText(requireContext(), "Location Detected", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(requireContext(), getString(R.string.deny_perm_text), Toast.LENGTH_SHORT)
+                .show()
+        }
+    }
+
+    private fun requestPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            try {
+                val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+                intent.addCategory("android.intent.category.DEFAULT")
+                intent.data =
+                    Uri.parse(String.format("package:%s", requireActivity().packageName))
+                startActivity(intent, Bundle.EMPTY)
+            } catch (e: Exception) {
+                val intent = Intent()
+                intent.action = Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
+                startActivity(intent)
+            }
+        } else {
+            requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
+    }
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            Toast.makeText(requireContext(), "Permission Granted", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(requireContext(), getString(R.string.deny_perm_text), Toast.LENGTH_SHORT)
+                .show()
+        }
+    }
+
+
 
     private fun selectProductType() {
         binding.fragmentProductType.apply {
@@ -205,21 +296,18 @@ class ProductListItemFragment : Fragment() {
         )
 
 
-//        insertData to local
-        lifecycleScope.launch(Dispatchers.IO) {
-//            farmerListItemViewModel.insertListItemTypes(
-//                ListItemTypes(
-//                    productType,
+//        lifecycleScope.launch(Dispatchers.IO) {
+//            farmerAuthViewModel.addProduct(
 //                    productName,
-//                    farmerListItemViewModel.getUri().toString(),
 //                    productDescription,
+//                    productPrice,
+//                    "0",
+//                    "yes",
+//                    productListViewModel.getUri(),
 //                    harvestedDate,
 //                    expiryDate,
-//                    productPrice,
-//                    auth.currentUser?.phoneNumber.toString()
-//                )
 //            )
-        }
+//        }
     }
     private fun isFieldsEmpty(): Boolean {
         return binding.productName.text.toString()

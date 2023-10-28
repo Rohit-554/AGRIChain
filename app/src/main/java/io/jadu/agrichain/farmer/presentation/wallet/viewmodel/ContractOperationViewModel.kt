@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.jadu.agrichain.decentralized.contracts.deploy.javawrappers.io.jadu.agrichain.SupplyChain_tsol_SupplyChainContract
 import io.jadu.agrichain.utils.kvStorage.KvStorage
 import kotlinx.coroutines.Dispatchers
@@ -19,6 +20,7 @@ import org.web3j.protocol.http.HttpService
 import java.math.BigInteger
 import javax.inject.Inject
 
+@HiltViewModel
 class ContractOperationViewModel @Inject constructor(private val application:Application):ViewModel() {
     private  var web3: Web3j = Web3j.build(HttpService("https://eth-sepolia.g.alchemy.com/v2/90tQ5woHcI8ey8xPwOe-apkcJV1PLXoy"))
     private lateinit var contractAddress: String

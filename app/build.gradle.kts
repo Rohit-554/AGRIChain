@@ -27,6 +27,7 @@ android {
         android {
             defaultConfig {
                 buildConfigField("String", "API_KEY", "\"${properties.getProperty("API_KEY")}\"")
+
             }
         }
 
@@ -133,5 +134,8 @@ dependencies {
 
 
 
-
+    implementation ("io.grpc:grpc-okhttp:1.59.0")
+    implementation ("io.grpc:grpc-stub:1.59.0")
+    implementation ("io.grpc:grpc-protobuf:1.14.0")
+    compileOnly ("org.apache.tomcat:annotations-api:6.0.53")
 }

@@ -75,6 +75,26 @@ class FarmerAuthViewModel @Inject constructor(
         }
     }
 
+    fun addShop(shop_name:String,description:String,location:String,phoneNo: String) = viewModelScope.launch(Dispatchers.IO) {
+        try {
+            farmerRepository.addShop(shop_name,description,location,phoneNo)
+        }catch (e:HttpException){
+            viewModelScope.launch {
+                mainEventChannel.send(MainEvent.shopAddedSuccess(e.message()))
+            }
+        }
+    }
+
+    fun addProduct(name:String,description: String,price:String,quantity:String,availability:String, image_url:MultipartBody.Part, sow_date:String, harvest_date:String, shopId:String) = viewModelScope.launch(Dispatchers.IO) {
+        try {
+            farmerRepository.addProduct(name, description, price, quantity, availability, image_url, sow_date, harvest_date,shopId)
+        }catch (e:HttpException){
+            viewModelScope.launch {
+                mainEventChannel.send(MainEvent.ProductAddedSuccess(e.message()))
+            }
+        }
+    }
+
     fun checkLocationPermission(): Boolean {
         return (ActivityCompat.checkSelfPermission(application, android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED &&
@@ -161,6 +181,9 @@ class FarmerAuthViewModel @Inject constructor(
     sealed class MainEvent {
         data class Error(val error: String) : MainEvent()
         data class Success(val message: String) : MainEvent()
+        data class shopAddedSuccess(val message: String):MainEvent()
+
+        data class ProductAddedSuccess(val message: String):MainEvent()
     }
 
 }

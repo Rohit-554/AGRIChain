@@ -2,12 +2,18 @@ package io.jadu.agrichain.farmer.data
 
 import io.jadu.agrichain.farmer.models.dtos.AddShop
 import io.jadu.agrichain.farmer.models.dtos.FarmerAuth
+import io.jadu.agrichain.farmer.models.dtos.Shop
+import io.jadu.agrichain.farmer.models.dtos.addProduct
+import okhttp3.MultipartBody
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
+import retrofit2.http.Path
 
 interface FarmerApiService {
-
     companion object {
         const val BASE_URL = "https://angry-teal-bluefish.cyclic.app/"
     }
@@ -18,6 +24,24 @@ interface FarmerApiService {
     @POST("/api/shop/addShop")
     suspend fun addShop(@Body addShop: AddShop)
 
+    @Multipart
+    @POST("/api/shop/{shopId}/addProduct")
+    suspend fun addProduct(
+        @Part("name") name: String,
+        @Part("description") description: String,
+        @Part("price") price: String,
+        @Part("quantity") quantity: String,
+        @Part("availability") availability: String,
+        @Part image_url: MultipartBody.Part,
+        @Part("sow_date") sow_date: String,
+        @Part("harvest_date") harvest_date: String,
+        @Path("shopId") shopId: String
+    )
 
+    @GET("api/shop/{phoneNo}/shops")
+    suspend fun getFarmerShopList(@Path("phoneNo") phoneNo: String): Response<Shop>
+
+    @GET("api/shop/{shopId}/products")
+    suspend fun getFarmerProductList(@Path("shopId") shopId: String)
 
 }

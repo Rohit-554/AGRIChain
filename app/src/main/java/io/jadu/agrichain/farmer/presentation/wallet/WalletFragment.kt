@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import io.jadu.agrichain.R
 import io.jadu.agrichain.databinding.FragmentWalletBinding
 import io.jadu.agrichain.presentation.wallet.viewmodel.ContractOperationViewModel
@@ -24,7 +25,7 @@ import kotlinx.coroutines.launch
 import java.math.BigDecimal
 import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class WalletFragment : Fragment() {
     private lateinit var binding: FragmentWalletBinding
     @Inject
