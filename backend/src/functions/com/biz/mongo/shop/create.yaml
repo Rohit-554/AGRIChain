@@ -1,0 +1,6 @@
+summary: Create Shop
+tasks:
+  - id: mongo_shop_create
+    fn: datasource.mongo.Shop.create
+    args:
+      data: <% inputs.body %>

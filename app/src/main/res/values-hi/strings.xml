@@ -6,6 +6,9 @@
     <string name="farmers_name">किसान</string>
     <string name="consumers_name">उपभोक्ता</string>
     <string name="enter_phone">कृपया अपना नंबर दर्ज करें</string>
+    <string name="login">लॉगिन करे</string>
+    <string name="start">प्रारंभ करे</string>
+    <string name="list_new">नया उत्पाद जोड़े</string>
     <!--    get top-->
     <string name="verify">ओटीपी प्राप्त करें</string>
     <string name="phone_number">अपना नंबर दर्ज करें</string>
@@ -64,6 +67,15 @@
     <string name="copy_address">पता कॉपी करें और वॉलेट चेकआउट करे</string>
     <string name="enter_wallet_address">वॉलेट पता दर्ज करें</string>
     <string name="send_fund">धन भेजें</string>
+
+
+
+    <string name="all_added_products">उत्पाद </string>
+    <string name="new_orders">नई ऑर्डरर्स </string>
+    <string name="wallet">वॉलेट</string>
+    <string name="profile">प्रोफाइल</string>
+
+
     <string name="enter_amount">अपना धन दर्ज करें</string>
     <string name="total_eths_required">"कुल ETHS"</string>
     <string name="expected_delivery_date">अपेक्षित तिथि</string>
@@ -82,4 +94,6 @@
     <string name="select_expiry_date">समाप्ति तिथि चुनें</string>
     <string name="select_planting_date">बीज लगाने की तिथि चुनें</string>
     <string name="namaste">"नमस्ते "</string>
+
+
 </resources>

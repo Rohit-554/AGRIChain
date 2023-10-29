@@ -1,0 +1,7 @@
+summary: Delete Shop
+tasks:
+  - id: mongo_shop_delete
+    fn: datasource.mongo.Shop.delete
+    args:
+      where:
+        id: <% inputs.params.id %>

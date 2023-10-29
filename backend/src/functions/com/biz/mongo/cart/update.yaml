@@ -1,0 +1,8 @@
+summary: Update Cart
+tasks:
+  - id: mongo_cart_update
+    fn: datasource.mongo.Cart.update
+    args:
+      where:
+        id: <% inputs.params.id %>
+      data: <% inputs.body %>

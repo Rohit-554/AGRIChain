@@ -1,0 +1,7 @@
+summary: Fetch User
+tasks:
+  - id: mongo_user_many
+    fn: datasource.mongo.User.findMany
+    args:
+      where:
+        role: 'farmer'

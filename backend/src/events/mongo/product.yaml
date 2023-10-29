@@ -1,0 +1,107 @@
+# ONE
+http.get./mongo/product/{id}:
+  summary: Fetch Product
+  description: Fetch Product from database
+  fn: com.biz.mongo.product.one
+  params:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    content:
+      application/json:
+        schema:
+          type: object
+
+
+
+# MANY
+http.get./mongo/products/{id}:
+  summary: Fetch Product
+  description: Fetch Product from database
+  fn: com.biz.mongo.product.many
+  params:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    content:
+      application/json:
+        schema:
+          type: object
+
+# CREATE
+http.post./mongo/product:
+  summary: Create a new Product
+  description: Create Product from database
+  fn: com.biz.mongo.product.create
+  body:
+    content:
+      application/json:
+        schema:
+          $ref: '#/definitions/mongo/Product'
+  responses:
+    content:
+      application/json:
+        schema:
+          type: object
+
+# UPDATE
+http.put./mongo/product/{id}:
+  summary: Update a Product
+  description: Update Product from database
+  fn: com.biz.mongo.product.update
+  body:
+    content:
+      application/json:
+        schema:
+          $ref: '#/definitions/mongo/Product'
+  params:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    content:
+      application/json:
+        schema:
+          type: object
+
+# DELETE
+http.delete./mongo/product/{id}:
+  summary: Delete a Product
+  description: Delete Product from database
+  fn: com.biz.mongo.product.delete
+  params:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    content:
+      application/json:
+        schema:
+          type: object
+
+# SEARCH
+http.post./mongo/product/search:
+  summary: Fetch multiple Product
+  description: Fetch multiple Product from database
+  fn: com.biz.mongo.product.search
+  body:
+    content:
+      application/json:
+        schema:
+          type: object
+  responses:
+    content:
+      application/json:
+        schema:
+          type: array
+

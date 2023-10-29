@@ -1,0 +1,88 @@
+# ONE
+http.get./mongo/cart/{id}:
+  summary: Fetch Cart
+  description: Fetch Cart from database
+  fn: com.biz.mongo.cart.one
+  params:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    content:
+      application/json:
+        schema:
+          type: object
+
+# CREATE
+http.post./mongo/cart:
+  summary: Create a new Cart
+  description: Create Cart from database
+  fn: com.biz.mongo.cart.create
+  body:
+    content:
+      application/json:
+        schema:
+          $ref: '#/definitions/mongo/Cart'
+  responses:
+    content:
+      application/json:
+        schema:
+          type: object
+
+# UPDATE
+http.put./mongo/cart/{id}:
+  summary: Update a Cart
+  description: Update Cart from database
+  fn: com.biz.mongo.cart.update
+  body:
+    content:
+      application/json:
+        schema:
+          $ref: '#/definitions/mongo/Cart'
+  params:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    content:
+      application/json:
+        schema:
+          type: object
+
+# DELETE
+http.delete./mongo/cart/{id}:
+  summary: Delete a Cart
+  description: Delete Cart from database
+  fn: com.biz.mongo.cart.delete
+  params:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    content:
+      application/json:
+        schema:
+          type: object
+
+# SEARCH
+http.post./mongo/cart/search:
+  summary: Fetch multiple Cart
+  description: Fetch multiple Cart from database
+  fn: com.biz.mongo.cart.search
+  body:
+    content:
+      application/json:
+        schema:
+          type: object
+  responses:
+    content:
+      application/json:
+        schema:
+          type: array
+

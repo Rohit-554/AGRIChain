@@ -51,8 +51,8 @@
     <fragment
         android:id="@+id/productListItemFragment"
         android:name="io.jadu.agrichain.presentation.appuis.ProductListItemFragment"
-        android:label="Add Product"
-        tools:layout="@layout/fragment_product_list_item" >
+        android:label="@string/list_new"
+        tools:layout="@layout/fragment_product_list_item">
         <action
             android:id="@+id/action_productListItemFragment_to_productPreviewFragment"
             app:destination="@id/productPreviewFragment" />
@@ -60,8 +60,8 @@
     <fragment
         android:id="@+id/productPreviewFragment"
         android:name="io.jadu.agrichain.presentation.appuis.ProductPreviewFragment"
-        android:label="fragment_product_preview"
-        tools:layout="@layout/fragment_product_preview" >
+        android:label="@string/preview_product"
+        tools:layout="@layout/fragment_product_preview">
         <action
             android:id="@+id/action_productPreviewFragment_to_productListItemFragment"
             app:destination="@id/productListItemFragment" />

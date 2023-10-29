@@ -1,0 +1,7 @@
+summary: Fetch Product
+tasks:
+  - id: mongo_product_one
+    fn: datasource.mongo.Product.findUnique
+    args:
+      where:
+        id: <% inputs.params.id %>

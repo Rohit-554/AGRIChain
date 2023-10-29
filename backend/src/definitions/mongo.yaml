@@ -1,0 +1,64 @@
+User:
+  type: object
+  properties:
+    createdAt:
+      type: string
+      format: date-time
+    phoneNo:
+      type: string
+    username:
+      type: string
+      nullable: true
+    role:
+      type: string
+      nullable: true
+    location:
+      type: string
+      nullable: true
+Shop:
+  type: object
+  properties:
+    createdAt:
+      type: string
+      format: date-time
+    updatedAt:
+      type: string
+      format: date-time
+    shop_name:
+      type: string
+    farmer_id:
+      type: string
+    description:
+      type: string
+    location:
+      type: string
+      nullable: true
+Product:
+  type: object
+  properties:
+    farmer_id:
+      type: string
+    name:
+      type: string
+      nullable: true
+    description:
+      type: string
+      nullable: true
+    price:
+      type: integer
+      nullable: true
+    quantity:
+      type: integer
+      nullable: true
+    availability:
+      type: string
+      nullable: true
+    image_url:
+      type: string
+      nullable: true
+    sow_date:
+      type: string
+      nullable: true
+    harvest_date:
+      type: string
+      nullable: true

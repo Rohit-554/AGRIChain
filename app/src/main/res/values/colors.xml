@@ -31,5 +31,6 @@
     <color name="TextCopyBackground">#23CE6B</color>
     <color name="iconColor">#7ac38f</color>
     <color name="iconColorSecondary">#9ae17b</color>
+    <color name="lightShadeBlue">#EFFFFD</color>
 
 </resources>

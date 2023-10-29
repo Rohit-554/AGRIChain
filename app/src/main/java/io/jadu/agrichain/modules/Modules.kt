@@ -10,8 +10,10 @@ import dagger.hilt.components.SingletonComponent
 import io.jadu.agrichain.farmer.data.FarmerApiService
 import io.jadu.agrichain.presentation.registrationui.phoneverfication.PhoneVerificationViewModel
 import io.jadu.agrichain.utils.kvStorage.KvStorage
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -36,9 +38,19 @@ object Modules {
 
     @Provides
     @Singleton
-    fun provideFarmerApiService(): FarmerApiService = Retrofit.Builder().baseUrl(FarmerApiService.BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-        .create(FarmerApiService::class.java)
+    fun provideFarmerApiService(): FarmerApiService {
+        val okHttpClient = OkHttpClient.Builder()
+            .connectTimeout(60, TimeUnit.SECONDS) // Increase the connection timeout
+            .readTimeout(60, TimeUnit.SECONDS)    // Increase the read timeout
+            .writeTimeout(60, TimeUnit.SECONDS)   // Increase the write timeout
+            .build()
+
+        return Retrofit.Builder()
+            .baseUrl(FarmerApiService.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient) // Set the custom OkHttpClient
+            .build()
+            .create(FarmerApiService::class.java)
+    }
 
 }

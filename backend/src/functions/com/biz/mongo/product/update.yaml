@@ -1,0 +1,8 @@
+summary: Update Product
+tasks:
+  - id: mongo_product_update
+    fn: datasource.mongo.Product.update
+    args:
+      where:
+        id: <% inputs.params.id %>
+      data: <% inputs.body %>

@@ -1,0 +1,7 @@
+summary: Delete Product
+tasks:
+  - id: mongo_product_delete
+    fn: datasource.mongo.Product.delete
+    args:
+      where:
+        id: <% inputs.params.id %>

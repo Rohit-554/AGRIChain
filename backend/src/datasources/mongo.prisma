@@ -1,0 +1,41 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGO_TEST_URL") //Connection string can be found in the .env folder. you can add your own database connection string
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  phoneNo   String
+  username  String?
+  role      String?
+  location  String?
+}
+
+model Shop {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  shop_name   String
+  farmer_id   String   @db.ObjectId
+  description String
+  location    String?
+}
+
+model Product {
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  farmer_id    String @db.ObjectId
+  name         String?
+  description  String?
+  price        Int?
+  quantity     Int?
+  availability String?
+  image_url    String?
+  sow_date     String?
+  harvest_date String?
+}
+

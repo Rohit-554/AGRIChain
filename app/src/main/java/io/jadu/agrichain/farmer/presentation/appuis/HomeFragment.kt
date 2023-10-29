@@ -1,6 +1,7 @@
 package io.jadu.agrichain.presentation.appuis
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
@@ -15,11 +16,13 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import io.jadu.agrichain.MainActivity
 import io.jadu.agrichain.R
 import io.jadu.agrichain.databinding.FragmentHomeBinding
+import io.jadu.agrichain.farmer.adapters.ProductListAdapter
 import io.jadu.agrichain.farmer.viewmodel.FarmerAuthViewModel
 
 @AndroidEntryPoint
@@ -28,6 +31,8 @@ class HomeFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private val farmerAuthViewModel: FarmerAuthViewModel by viewModels()
     private var backPressedTime: Long = 0
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: ProductListAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,11 +41,25 @@ class HomeFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
         setupMenu()
         exitOnBackPress()
-        binding.btnLogout.setOnClickListener {
-            auth.signOut()
-            requireActivity().finish()
+//        binding.btnLogout.setOnClickListener {
+//            auth.signOut()
+//            requireActivity().finish()
+//        }
+        recyclerView = binding.rvListOfProducts
+        recyclerView.layoutManager = androidx.recyclerview.widget.GridLayoutManager(requireContext(),2, androidx.recyclerview.widget.LinearLayoutManager.VERTICAL, false)
+        adapter = ProductListAdapter()
+        farmerAuthViewModel.getItemList.observe(viewLifecycleOwner) {
+            Log.d("homefragment", "onCreateView: ${it.size}")
+            if (it != null) {
+                adapter.itemTypes = it
+                recyclerView.adapter = adapter
+                adapter.notifyDataSetChanged()
+            }
         }
-        farmerAuthViewModel.setPhone("farmer",auth.currentUser?.phoneNumber!!.substring(3))
+
+        (activity as MainActivity).showFabandBottomNav()
+
+        farmerAuthViewModel.setPhone("farmer",auth.currentUser?.phoneNumber!!.substring(3),)
         (activity as MainActivity).showBottomNavigation()
         (activity as MainActivity).showActionBar()
 

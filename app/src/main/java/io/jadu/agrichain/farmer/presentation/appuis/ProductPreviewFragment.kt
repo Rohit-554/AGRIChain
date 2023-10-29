@@ -10,15 +10,19 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import io.jadu.agrichain.R
 import io.jadu.agrichain.databinding.FragmentProductPreviewBinding
+import io.jadu.agrichain.farmer.models.dtos.Shop
 import io.jadu.agrichain.farmer.viewmodel.FarmerAuthViewModel
 import io.jadu.agrichain.farmer.viewmodel.ProductListItemViewModel
 import io.jadu.agrichain.presentation.wallet.viewmodel.ContractOperationViewModel
+import io.jadu.agrichain.utils.Constants
 import io.jadu.agrichain.utils.kvStorage.KvStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,24 +43,30 @@ class ProductPreviewFragment : Fragment() {
     private var productDescription: String? = null
     private var seedingDate: String? = null
     private var expiryDate: String? = null
-    private var shopId:String? = null
-    private var productPrice: String? = null
+    private var shopId: String? = null
+    private var productPrice: Int? = null
     private var productType: String? = null
-    private var farmLocation:String?=null
-    private var dateInMillis:Long = 0L
+    private var farmLocation: String? = null
+    private var dateInMillis: Long = 0L
     private var getUri: String? = null
     private var isWalletCreated: Boolean = false
     private var snackBar: Snackbar? = null
-    private var currentTimeInMillis:Long? = null
-    private var productId:Long? = 0L
-    private var bundle:Bundle? = null
+    private var currentTimeInMillis: Long? = null
+    private var productId: Long? = 0L
+    private var bundle: Bundle? = null
+    private var farmerId: String? = null
+    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
+
+    //create a livedata for the type Shop
+    private lateinit var shopList: LiveData<Shop>
+
     @Inject
     lateinit var KvStorage: KvStorage
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentProductPreviewBinding.inflate(inflater,container,false)
+        binding = FragmentProductPreviewBinding.inflate(inflater, container, false)
         KvStorage = KvStorage(requireContext())
         bundle = Bundle()
         setPreviewData()
@@ -72,30 +82,44 @@ class ProductPreviewFragment : Fragment() {
             addProductBlock()
 //            uploadDataToServer()
         }
+
+//         farmerAuthViewModel.getFarmerShopList(auth.currentUser?.phoneNumber!!).observe(viewLifecycleOwner){
+//             shopList = it
+//             shopId = shopList.value?.shopId
+//         }
+
+
         binding.btnEditFields.setOnClickListener {
             findNavController().navigate(R.id.action_productPreviewFragment_to_productListItemFragment)
         }
         return binding.root
     }
 
-    private fun addProductBlock(){
+
+    private fun addProductBlock() {
         farmLocation?.let {
             productId = System.currentTimeMillis()
             uploadDataToServer()
+            binding.loadingTransactionLottie.visibility = View.GONE
 //            addProductToBlockchain(BigInteger.valueOf(productId!!), it, BigInteger.valueOf(dateInMillis/1000))
             bundle = bundleOf("productId" to productId.toString())
-            Log.d("randomId","$productId")
-            Log.d("transactionSuccess","Trasactiondone")
+            Log.d("randomId", "$productId")
+            Log.d("transactionSuccess", "Trasactiondone")
         }
     }
-    private  fun addProductToBlockchain(productId: BigInteger, farmLocation: String, plantingDate: BigInteger) {
-        Log.d("transactionSuccessaddproduct","Trasaction")
 
-        contractOperationViewModel.contractInstance.observe(requireActivity()){
+    private fun addProductToBlockchain(
+        productId: BigInteger,
+        farmLocation: String,
+        plantingDate: BigInteger
+    ) {
+        Log.d("transactionSuccessaddproduct", "Trasaction")
+
+        contractOperationViewModel.contractInstance.observe(requireActivity()) {
             val contractInstance = it
-            Log.d("transactionSuccesscontractx",contractInstance.toString())
+            Log.d("transactionSuccesscontractx", contractInstance.toString())
 
-            lifecycleScope.launch(Dispatchers.IO){
+            lifecycleScope.launch(Dispatchers.IO) {
                 try {
                     val transactionReceipt: TransactionReceipt? =
                         contractInstance?.addProduct(productId, farmLocation, plantingDate)?.send()
@@ -106,23 +130,24 @@ class ProductPreviewFragment : Fragment() {
                         Log.d("transactionSuccess", transactionHash)
                     } else {
                         // Transaction failed or was not mined yet
-                        withContext(Dispatchers.Main){
+                        withContext(Dispatchers.Main) {
                             updateUiOnTransactionError()
                             displayErrorSnackBar("Transaction Failed")
                         }
-                        Log.d("transactionFailed","Trasaction")
+                        Log.d("transactionFailed", "Trasaction")
                     }
-                }catch (e: TransactionException){
+                } catch (e: TransactionException) {
                     displayErrorSnackBar("Transaction Failed")
-                    Log.d("transactionFailed",e.toString())
-                    withContext(Dispatchers.Main){
+                    Log.d("transactionFailed", e.toString())
+                    withContext(Dispatchers.Main) {
                         updateUiOnTransactionError()
                     }
                 }
             }
         }
     }
-    private fun updateUiOnTransactionError(){
+
+    private fun updateUiOnTransactionError() {
         binding.btnPreviewBtn.visibility = View.VISIBLE
         binding.lottieProgress.visibility = View.GONE
         binding.btnPreviewBtn.isEnabled = true
@@ -131,29 +156,32 @@ class ProductPreviewFragment : Fragment() {
         binding.loadingTransactionLottie.visibility = View.GONE
     }
 
-    private fun updateUiOnTransactionSuccess(){
+    private fun updateUiOnTransactionSuccess() {
         uploadDataToServer()
     }
 
     private fun uploadDataToServer() {
         //upload Data to server
         val imagePart = farmerAuthViewModel.getImagePart(getUriFromPath(getUri!!), requireContext())
+
         val contractAddress = KvStorage.storageGetString("contractAddress")
 //        Log.d("imagepart", "uploadDataToServer: ${imagePart.body}")
         farmerAuthViewModel.addProduct(
+            Constants.farmerId,
             productName!!,
-            productDescription!!,
+            "productDescription!!",
             productPrice!!,
-            "0",
+            0,
             "yes",
-            imagePart,
-            seedingDate!!,
-            expiryDate!!,
-            shopId!!,
+            "https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg",
+            "seedingDate!!",
+            "expiryDate!!",
         )
+        binding.loadingTransactionLottie.visibility = View.GONE
+
     }
 
-    private fun updateUiOnSuccessfulUpload(){
+    private fun updateUiOnSuccessfulUpload() {
         binding.btnPreviewBtn.visibility = View.VISIBLE
         binding.lottieProgress.visibility = View.GONE
         binding.btnPreviewBtn.isEnabled = true
@@ -161,6 +189,7 @@ class ProductPreviewFragment : Fragment() {
         binding.farmerPreviewList.alpha = 1f
         binding.loadingTransactionLottie.visibility = View.GONE
     }
+
     private fun getUriFromPath(path: String): Uri {
         return Uri.parse(path)
     }
@@ -188,33 +217,37 @@ class ProductPreviewFragment : Fragment() {
         productDescription = arguments?.getString("productDescription")
         seedingDate = arguments?.getString("harvestedDate")
         expiryDate = arguments?.getString("expiryDate")
-        productPrice = arguments?.getString("productPrice")
+        productPrice = arguments?.getInt("productPrice")
         productType = arguments?.getString("productType")
         getUri = arguments?.getString("ImageUri")
         farmLocation = arguments?.getString("farmLocation")
         dateInMillis = arguments?.getLong("dateInMillis")!!
 
-        Log.d("unixtime","$dateInMillis")
+        Log.d("unixtime", "$dateInMillis")
+
+        Log.d(
+            "testx",
+            "${productName},${productDescription},${seedingDate},${expiryDate},${productPrice},${productType},${getUri},${farmLocation}"
+        )
         binding.apply {
             tvProductType.text = productType
             tvProductName.setText(productName)
             tvProductDescription.setText(productDescription)
             tvHarvestedDate.setText(seedingDate)
             tvExpiryDate.setText(expiryDate)
-            tvProductPrice.setText(productPrice)
+            tvProductPrice.setText(productPrice.toString())
             ivCustomimageselect.setImageURI(getUriFromPath(getUri!!))
             ivVegetables.setImageURI(getUriFromPath(getUri!!))
             tvFarmLocation.setText(farmLocation)
-
             tvProductName.keyListener = null
             tvProductDescription.keyListener = null
             tvHarvestedDate.keyListener = null
             tvExpiryDate.keyListener = null
             tvProductPrice.keyListener = null
             tvFarmLocation.keyListener = null
-
         }
     }
+
     private fun generateRandomId(): Long {
         val random = Random()
         while (true) {

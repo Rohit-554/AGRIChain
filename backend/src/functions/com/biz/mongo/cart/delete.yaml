@@ -1,0 +1,7 @@
+summary: Delete Cart
+tasks:
+  - id: mongo_cart_delete
+    fn: datasource.mongo.Cart.delete
+    args:
+      where:
+        id: <% inputs.params.id %>

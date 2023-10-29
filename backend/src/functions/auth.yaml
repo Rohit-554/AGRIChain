@@ -1,0 +1,7 @@
+summary: greet the user
+description: this function greets the user by accepting the user name
+tasks:
+  - id: greet_task
+    fn: authTest
+    args:
+     data: <% inputs.body %>

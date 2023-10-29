@@ -1,0 +1,5 @@
+summary: Fetch many Product
+tasks:
+  - id: mongo_product_search
+    fn: datasource.mongo.Product.findMany
+    args: {}

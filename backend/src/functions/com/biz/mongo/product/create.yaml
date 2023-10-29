@@ -1,0 +1,6 @@
+summary: Create Product
+tasks:
+  - id: mongo_product_create
+    fn: datasource.mongo.Product.create
+    args:
+      data: <% inputs.body %>

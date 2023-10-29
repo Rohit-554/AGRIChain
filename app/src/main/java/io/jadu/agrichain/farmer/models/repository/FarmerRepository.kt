@@ -1,9 +1,9 @@
 package io.jadu.agrichain.farmer.models.repository
 
 import io.jadu.agrichain.farmer.data.FarmerApiService
+import io.jadu.agrichain.farmer.models.dtos.AddProduct
 import io.jadu.agrichain.farmer.models.dtos.AddShop
 import io.jadu.agrichain.farmer.models.dtos.FarmerAuth
-import io.jadu.agrichain.farmer.models.dtos.addProduct
 import okhttp3.MultipartBody
 import javax.inject.Inject
 
@@ -12,21 +12,22 @@ class FarmerRepository @Inject constructor(private val farmerApiService: FarmerA
     suspend fun farmerAuth(role: String, phoneNo: String) =
         farmerApiService.getFarmerAuth(FarmerAuth(role, phoneNo))
 
-    suspend fun addShop(shop_name: String, description: String, location: String, phoneNo: String) =
-        farmerApiService.addShop(AddShop(shop_name, description, location, phoneNo))
+
 
     suspend fun addProduct(
+        farmerId: String,
         name: String,
         description: String,
-        price: String,
-        quantity: String,
+        price: Int,
+        quantity: Int,
         availability: String,
-        image_url: MultipartBody.Part,
+        image_url: String,
         sow_date: String,
         harvest_date: String,
-        shopId: String
     ) =
         farmerApiService.addProduct(
+            AddProduct(
+                farmerId,
                 name,
                 description,
                 price,
@@ -35,6 +36,15 @@ class FarmerRepository @Inject constructor(private val farmerApiService: FarmerA
                 image_url,
                 sow_date,
                 harvest_date,
-                shopId
+            )
         )
+
+
+
+    suspend fun getFarmerProductList(addProduct: AddProduct) = farmerApiService.getFarmerProductList(addProduct)
+
+    suspend fun getProduct(productId: String) = farmerApiService.getProduct(productId)
+
+    suspend fun getProducts(userId: String) = farmerApiService.getProducts(userId)
+
 }

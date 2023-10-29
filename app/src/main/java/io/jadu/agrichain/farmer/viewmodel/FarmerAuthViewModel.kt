@@ -13,12 +13,18 @@ import android.provider.MediaStore
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.jadu.agrichain.farmer.models.dtos.AddProduct
+import io.jadu.agrichain.farmer.models.dtos.Shop
+import io.jadu.agrichain.farmer.models.dtos.productDetails
 import io.jadu.agrichain.farmer.models.repository.FarmerRepository
+import io.jadu.agrichain.utils.Constants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -43,6 +49,14 @@ class FarmerAuthViewModel @Inject constructor(
 
     private val mainEventChannel = Channel<MainEvent>()
     val mainEvent = mainEventChannel.receiveAsFlow()
+    private val _getAllProducts = MutableLiveData<productDetails>()
+
+    val getAllProduct: LiveData<productDetails>
+        get() = _getAllProducts
+
+    private val _getItemList = MutableLiveData<List<productDetails>>()
+    val getItemList: LiveData<List<productDetails>>
+        get() = _getItemList
 
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
     private var _index = 0
@@ -52,6 +66,8 @@ class FarmerAuthViewModel @Inject constructor(
 
     init {
         setupBouncyCastle()
+        getProducts(Constants.farmerId)
+        getProductDetails(Constants.productId)
     }
 
     private fun setupBouncyCastle() {
@@ -75,22 +91,67 @@ class FarmerAuthViewModel @Inject constructor(
         }
     }
 
-    fun addShop(shop_name:String,description:String,location:String,phoneNo: String) = viewModelScope.launch(Dispatchers.IO) {
+
+    fun addProduct(farmerId: String,name:String,description: String,price:Int,quantity:Int,availability:String, image_url:String, sow_date:String, harvest_date:String) = viewModelScope.launch(Dispatchers.IO) {
         try {
-            farmerRepository.addShop(shop_name,description,location,phoneNo)
+            farmerRepository.addProduct(Constants.farmerId,name, description, price, quantity, availability, image_url, sow_date, harvest_date)
         }catch (e:HttpException){
             viewModelScope.launch {
-                mainEventChannel.send(MainEvent.shopAddedSuccess(e.message()))
+                mainEventChannel.send(MainEvent.ProductAddedSuccess(e.message()))
             }
         }
     }
 
-    fun addProduct(name:String,description: String,price:String,quantity:String,availability:String, image_url:MultipartBody.Part, sow_date:String, harvest_date:String, shopId:String) = viewModelScope.launch(Dispatchers.IO) {
+    fun getProductDetails(productId: String) = viewModelScope.launch(Dispatchers.IO) {
         try {
-            farmerRepository.addProduct(name, description, price, quantity, availability, image_url, sow_date, harvest_date,shopId)
+            val response = farmerRepository.getProduct(productId)
+            if (response.isSuccessful){
+                response.body()?.let {
+                    _getAllProducts.postValue(it)
+                }
+            }
         }catch (e:HttpException){
             viewModelScope.launch {
-                mainEventChannel.send(MainEvent.ProductAddedSuccess(e.message()))
+                mainEventChannel.send(MainEvent.Error(e.message()))
+            }
+        }
+    }
+
+    fun getProducts(userId: String) = viewModelScope.launch(Dispatchers.IO) {
+        try {
+            val response = farmerRepository.getProducts(userId)
+            if (response.isSuccessful){
+                response.body()?.let {
+                    Log.d("FarmerAuthViewModel", "getProducts: $it")
+                    _getItemList.postValue(it)
+                }
+            }
+        }catch (e:HttpException){
+            viewModelScope.launch {
+                mainEventChannel.send(MainEvent.Error(e.message()))
+            }
+        }
+    }
+
+
+    fun farmerProductList(addProduct: AddProduct) = viewModelScope.launch(Dispatchers.IO) {
+        try {
+            farmerRepository.getFarmerProductList(
+                AddProduct(
+                Constants.farmerId,
+                addProduct.name,
+                addProduct.description,
+                addProduct.price,
+                addProduct.quantity,
+                addProduct.availability,
+                addProduct.image_url,
+                addProduct.sow_date,
+                addProduct.harvest_date,
+            )
+            )
+        }catch (e:HttpException){
+            viewModelScope.launch {
+                mainEventChannel.send(MainEvent.Error(e.message()))
             }
         }
     }

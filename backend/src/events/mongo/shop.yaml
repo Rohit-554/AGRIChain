@@ -1,0 +1,88 @@
+# ONE
+http.get./mongo/shop/{id}:
+  summary: Fetch Shop
+  description: Fetch Shop from database
+  fn: com.biz.mongo.shop.one
+  params:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    content:
+      application/json:
+        schema:
+          type: object
+
+# CREATE
+http.post./mongo/shop:
+  summary: Create a new Shop
+  description: Create Shop from database
+  fn: com.biz.mongo.shop.create
+  body:
+    content:
+      application/json:
+        schema:
+          $ref: '#/definitions/mongo/Shop'
+  responses:
+    content:
+      application/json:
+        schema:
+          type: object
+
+# UPDATE
+http.put./mongo/shop/{id}:
+  summary: Update a Shop
+  description: Update Shop from database
+  fn: com.biz.mongo.shop.update
+  body:
+    content:
+      application/json:
+        schema:
+          $ref: '#/definitions/mongo/Shop'
+  params:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    content:
+      application/json:
+        schema:
+          type: object
+
+# DELETE
+http.delete./mongo/shop/{id}:
+  summary: Delete a Shop
+  description: Delete Shop from database
+  fn: com.biz.mongo.shop.delete
+  params:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    content:
+      application/json:
+        schema:
+          type: object
+
+# SEARCH
+http.post./mongo/shop/search:
+  summary: Fetch multiple Shop
+  description: Fetch multiple Shop from database
+  fn: com.biz.mongo.shop.search
+  body:
+    content:
+      application/json:
+        schema:
+          type: object
+  responses:
+    content:
+      application/json:
+        schema:
+          type: array
+

@@ -1,0 +1,7 @@
+summary: Fetch Product
+tasks:
+  - id: mongo_product_one
+    fn: datasource.mongo.Product.findMany
+    args:
+      where:
+        farmer_id: <% inputs.params.id %>

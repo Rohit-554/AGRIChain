@@ -1,0 +1,6 @@
+summary: Create Cart
+tasks:
+  - id: mongo_cart_create
+    fn: datasource.mongo.Cart.create
+    args:
+      data: <% inputs.body %>

@@ -1,0 +1,5 @@
+summary: Fetch many Shop
+tasks:
+  - id: mongo_shop_search
+    fn: datasource.mongo.Shop.findMany
+    args: {}

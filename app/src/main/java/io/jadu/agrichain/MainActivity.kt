@@ -30,6 +30,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.customAppToolbar)
 
+
+
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
         val appBarConfiguration = AppBarConfiguration(
@@ -81,6 +83,19 @@ class MainActivity : AppCompatActivity() {
         binding.addProductButton.visibility = View.VISIBLE
     }
 
+
+
+    fun hideFabandBootomNav(){
+        binding.addProductButton.visibility = View.GONE
+        binding.bottomNavigationView.visibility = View.GONE
+        binding.bottomAppBar.visibility = View.GONE
+    }
+
+    fun showFabandBottomNav(){
+        binding.addProductButton.visibility = View.VISIBLE
+        binding.bottomNavigationView.visibility = View.VISIBLE
+        binding.bottomAppBar.visibility = View.VISIBLE
+    }
     fun hideActionBar(){
         supportActionBar?.hide()
     }

@@ -1,0 +1,7 @@
+summary: Fetch Cart
+tasks:
+  - id: mongo_cart_one
+    fn: datasource.mongo.Cart.findUnique
+    args:
+      where:
+        id: <% inputs.params.id %>

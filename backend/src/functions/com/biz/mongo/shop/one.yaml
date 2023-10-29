@@ -1,0 +1,7 @@
+summary: Fetch Shop
+tasks:
+  - id: mongo_shop_one
+    fn: datasource.mongo.Shop.findUnique
+    args:
+      where:
+        id: <% inputs.params.id %>

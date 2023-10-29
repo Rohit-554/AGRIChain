@@ -1,6 +1,7 @@
 package io.jadu.agrichain.presentation.appuis
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -11,10 +12,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -26,10 +29,11 @@ import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
+import com.kenai.jffi.Main
 import dagger.hilt.android.AndroidEntryPoint
+import io.jadu.agrichain.MainActivity
 import io.jadu.agrichain.R
 import io.jadu.agrichain.databinding.FragmentProductListItemBinding
-import io.jadu.agrichain.farmer.models.dtos.addProduct
 import io.jadu.agrichain.farmer.viewmodel.FarmerAuthViewModel
 import io.jadu.agrichain.farmer.viewmodel.ProductListItemViewModel
 import kotlinx.coroutines.Dispatchers
@@ -59,6 +63,7 @@ class ProductListItemFragment : Fragment() {
             getExpiryDate(binding.expiryDate)
         }
 
+        (activity as MainActivity)?.hideFabandBootomNav()
 
 
         val pickMedia = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
@@ -94,31 +99,37 @@ class ProductListItemFragment : Fragment() {
 
 
 
+
+
+
+
+
         binding.PreviewAddedProduct.setOnClickListener {
-            if (isFieldsEmpty()) {
-                Toast.makeText(
-                    requireContext(), getString(R.string.Fields_not_empty), Toast.LENGTH_SHORT
-                ).show()
-//                isDescriptionEmpty()
-//                isProductNameEmpty()
-//                isHarvestedDateEmpty()
-//                isExpiryDateEmpty()
-//                isProductPriceEmpty()
-//                isFarmLocationEmpty()
-//                isImageNotSelected()
-                binding.productName.error = "Enter Product Name"
-                binding.productDescription.error = "Enter Product Description"
-                binding.harvestedDate.error = "Enter Harvested Date"
-                binding.expiryDate.error = "Enter Expiry Date"
-                binding.productPrice.error = "Enter Product Price"
-                binding.farmLocation.error = "Enter Farm Location"
-                binding.warningImgNotSelected.visibility = View.VISIBLE
-            } else {
-                productInfo()
-                findNavController().navigate(
-                    R.id.action_productListItemFragment_to_productPreviewFragment, bundle
-                )
-            }
+            productInfo()
+            findNavController().navigate(
+                R.id.action_productListItemFragment_to_productPreviewFragment, bundle
+            )
+//            if (isFieldsEmpty()) {
+//                Toast.makeText(
+//                    requireContext(), getString(R.string.Fields_not_empty), Toast.LENGTH_SHORT
+//                ).show()
+////                isDescriptionEmpty()
+////                isProductNameEmpty()
+////                isHarvestedDateEmpty()
+////                isExpiryDateEmpty()
+////                isProductPriceEmpty()
+////                isFarmLocationEmpty()
+////                isImageNotSelected()
+//                binding.productName.error = "Enter Product Name"
+//                binding.productDescription.error = "Enter Product Description"
+//                binding.harvestedDate.error = "Enter Harvested Date"
+//                binding.expiryDate.error = "Enter Expiry Date"
+//                binding.productPrice.error = "Enter Product Price"
+//                binding.farmLocation.error = "Enter Farm Location"
+//                binding.warningImgNotSelected.visibility = View.VISIBLE
+//            } else {
+//
+//            }
         }
 
 
@@ -249,9 +260,10 @@ class ProductListItemFragment : Fragment() {
         val harvestedDate = binding.harvestedDate.text.toString()
         val expiryDate = binding.expiryDate.text.toString()
         val productPrice = binding.productPrice.text.toString()
-        var productType = ""
+        var productType = "None"
         val farmLocation = binding.farmLocation.text.toString()
         //get user phone number
+        Log.d("testx", "${productName},${productDescription},${harvestedDate},${expiryDate},${productPrice},${farmLocation}")
 
         when (productListViewModel.getIndex()) {
             0 -> {
@@ -292,7 +304,7 @@ class ProductListItemFragment : Fragment() {
             "productType" to productType,
             "farmLocation" to farmLocation,
             "dateInMillis" to dateInMillis,
-            "ImageUri" to productListViewModel.getUri().toString(),
+            "ImageUri" to farmerAuthViewModel.getUri().toString()
         )
 
 
@@ -311,10 +323,18 @@ class ProductListItemFragment : Fragment() {
     }
     private fun isFieldsEmpty(): Boolean {
         return binding.productName.text.toString()
-            .isEmpty() || binding.productDescription.text.toString()
-            .isEmpty() || binding.harvestedDate.text.toString()
-            .isEmpty() || binding.expiryDate.text.toString()
-            .isEmpty() || binding.productPrice.text.toString()
-            .isEmpty() || binding.farmLocation.text.toString().isEmpty() || !_isImageImported
+            .isEmpty()
+                || binding.productDescription.text.toString()
+            .isEmpty()
+                || binding.harvestedDate.text.toString()
+            .isEmpty()
+                ||
+                binding.expiryDate.text.toString().isEmpty()
+                || binding.productPrice.text.toString()
+            .isEmpty()
+                || binding.farmLocation.text.toString().isEmpty() || !_isImageImported
     }
+
+
+
 }

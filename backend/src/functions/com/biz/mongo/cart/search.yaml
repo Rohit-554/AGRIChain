@@ -1,0 +1,5 @@
+summary: Fetch many Cart
+tasks:
+  - id: mongo_cart_search
+    fn: datasource.mongo.Cart.findMany
+    args: {}

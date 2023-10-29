@@ -113,6 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:fontFamily="@font/poppins_medium"
+            android:visibility="gone"
             android:text="@string/add_product_details"
             android:textColor="@color/primary_text_color"
             android:textSize="16sp" />
@@ -122,6 +123,7 @@
             style="@style/TextInputTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_margin="15dp"
             android:hint="eg. Tomato is a red fruit"
             >
@@ -131,6 +133,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
+                android:visibility="gone"
                 android:scrollHorizontally="false"
                 />
         </com.google.android.material.textfield.TextInputLayout>
@@ -143,6 +146,7 @@
             android:layout_marginStart="16dp"
             android:fontFamily="@font/poppins_medium"
             android:text="@string/expiry_date"
+            android:visibility="gone"
             android:textColor="@color/primary_text_color"
             android:textSize="16sp" />
         <com.google.android.material.textfield.TextInputLayout
@@ -150,6 +154,7 @@
             style="@style/TextInputTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_margin="15dp"
             >
 
@@ -157,12 +162,14 @@
                 android:id="@+id/expiry_date"
                 android:focusableInTouchMode="false"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_marginStart="16dp"
             android:fontFamily="@font/poppins_medium"
             android:text="@string/_5_add_seeding_date"
@@ -175,6 +182,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
+            android:visibility="gone"
             >
 
             <com.google.android.material.textfield.TextInputEditText
@@ -182,6 +190,7 @@
                 android:focusableInTouchMode="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -218,6 +227,7 @@
             android:layout_marginStart="16dp"
             android:fontFamily="@font/poppins_medium"
             android:text="@string/_8_add_farm_location"
+            android:visibility="gone"
             android:textColor="@color/primary_text_color"
             android:textSize="16sp" />
         <com.google.android.material.textfield.TextInputLayout
@@ -225,6 +235,7 @@
             style="@style/TextInputTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_margin="15dp"
             >
 
@@ -245,6 +256,7 @@
             android:drawableStart="@drawable/baseline_location_on_24"
             android:fontFamily="@font/poppins_medium"
             android:text="@string/detect_automatically"
+            android:visibility="gone"
             />
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/PreviewAddedProduct"
